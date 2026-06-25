@@ -11,5 +11,32 @@ CREATE TABLE Students(
 
 SHOW TABLES;
 SELECT * FROM Students;
-DELETE FROM Students
-WHERE student_id = 1;
+
+
+CREATE TABLE Subjects(
+    subject_id INT AUTO_INCREMENT PRIMARY KEY,
+    subject_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Marks(
+    mark_id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    marks INT NOT NULL,
+
+    FOREIGN KEY(student_id)
+        REFERENCES Students(student_id),
+
+    FOREIGN KEY(subject_id)
+        REFERENCES Subjects(subject_id)
+);
+
+CREATE TABLE Attendance(
+    attendance_id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT UNIQUE,
+    present_days INT DEFAULT 0,
+    total_days INT DEFAULT 0,
+
+    FOREIGN KEY(student_id)
+        REFERENCES Students(student_id)
+);
