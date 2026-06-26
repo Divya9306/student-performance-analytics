@@ -70,3 +70,46 @@ m.marks
 FROM Students s
 LEFT JOIN Marks m
 ON s.student_id=m.student_id;
+
+-- =====================================
+-- GROUP BY & HAVING QUERIES
+-- =====================================
+
+SELECT
+student_id,
+AVG(marks) AS average_marks
+FROM Marks
+GROUP BY student_id;
+
+SELECT
+s.name,
+AVG(m.marks) AS average_marks
+FROM Students s
+INNER JOIN Marks m
+ON s.student_id = m.student_id
+GROUP BY s.student_id, s.name;
+
+SELECT
+department,
+COUNT(*) AS total_students
+FROM Students
+GROUP BY department;
+
+SELECT
+s.name,
+AVG(m.marks) AS average_marks
+FROM Students s
+INNER JOIN Marks m
+ON s.student_id = m.student_id
+GROUP BY s.student_id, s.name
+ORDER BY average_marks DESC;
+
+SELECT
+s.name,
+AVG(m.marks) AS average_marks
+FROM Students s
+INNER JOIN Marks m
+ON s.student_id = m.student_id
+GROUP BY s.student_id, s.name
+HAVING AVG(m.marks) > 80
+ORDER BY average_marks DESC;
