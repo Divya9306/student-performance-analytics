@@ -17,6 +17,29 @@ const getStudents = (req, res) => {
 
 };
 
+
+const addStudent = (req, res) => {
+
+    const student = req.body;
+
+    studentModel.addStudent(student, (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                message: "Failed to add student",
+                error: err.message
+            });
+        }
+
+        res.status(201).json({
+            message: "Student added successfully",
+            studentId: result.insertId
+        });
+
+    });
+
+};
 module.exports = {
-    getStudents
+    getStudents,
+    addStudent
 };
