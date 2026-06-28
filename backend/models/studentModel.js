@@ -43,7 +43,43 @@ const addStudent = (student, callback) => {
 
 };
 
+
+
+const updateStudent = (id, student, callback) => {
+
+    const sql = `
+        UPDATE Students
+        SET
+            name = ?,
+            email_ID = ?,
+            department = ?,
+            admission_date = ?
+        WHERE student_id = ?
+    `;
+
+    db.query(
+        sql,
+        [
+            student.name,
+            student.email_ID,
+            student.department,
+            student.admission_date,
+            id
+        ],
+        (err, result) => {
+
+            if (err) {
+                return callback(err, null);
+            }
+
+            callback(null, result);
+
+        }
+    );
+
+};
 module.exports = {
     getAllStudents,
-    addStudent
+    addStudent,
+    updateStudent
 };
