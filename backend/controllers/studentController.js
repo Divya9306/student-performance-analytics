@@ -112,10 +112,36 @@ const searchStudents = (req, res) => {
 
 };
 
+const getStudentById = (req, res) => {
+
+    const id = req.params.id;
+
+    studentModel.getStudentById(id, (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                message: "Failed to fetch student",
+                error: err.message
+            });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+
+        res.status(200).json(results[0]);
+
+    });
+
+};
+
 module.exports = {
     getStudents,
     addStudent,
     updateStudent,
     deleteStudent,
-    searchStudents
+    searchStudents,
+    getStudentById
 };
