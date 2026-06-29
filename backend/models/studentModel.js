@@ -78,8 +78,28 @@ const updateStudent = (id, student, callback) => {
     );
 
 };
+
+const deleteStudent = (id, callback) => {
+
+    const sql = `
+        DELETE FROM Students
+        WHERE student_id = ?
+    `;
+
+    db.query(sql, [id], (err, result) => {
+
+        if (err) {
+            return callback(err, null);
+        }
+
+        callback(null, result);
+
+    });
+
+};
 module.exports = {
     getAllStudents,
     addStudent,
-    updateStudent
+    updateStudent,
+    deleteStudent
 };

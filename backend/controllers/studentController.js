@@ -66,8 +66,36 @@ const updateStudent = (req, res) => {
 
 };
 
+const deleteStudent = (req, res) => {
+
+    const id = req.params.id;
+
+    studentModel.deleteStudent(id, (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                message: "Failed to delete student",
+                error: err.message
+            });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Student deleted successfully"
+        });
+
+    });
+
+};
+
 module.exports = {
     getStudents,
     addStudent,
-    updateStudent
+    updateStudent,
+    deleteStudent
 };
