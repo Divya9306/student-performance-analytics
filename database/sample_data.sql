@@ -1,6 +1,7 @@
 USE student_performance_db;
+describe students;
+INSERT INTO Students 
 
-INSERT INTO Students
 (name,email_ID,department,admission_date)
 VALUES
 ('Rahul Sharma','rahul@gmail.com','CSE','2024-01-10'),
@@ -43,3 +44,9 @@ VALUES
 (4,92,100);
 
 SELECT * FROM Attendance;
+
+SELECT *
+FROM Students
+WHERE student_id = 3;
+
+ALTER TABLE Students AUTO_INCREMENT = 3;

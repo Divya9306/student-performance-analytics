@@ -23,9 +23,11 @@ CREATE TABLE Marks(
     student_id INT NOT NULL,
     subject_id INT NOT NULL,
     marks INT NOT NULL,
+    
 
     FOREIGN KEY(student_id)
-        REFERENCES Students(student_id),
+        REFERENCES Students(student_id)
+        ON DELETE CASCADE,
 
     FOREIGN KEY(subject_id)
         REFERENCES Subjects(subject_id)
@@ -39,4 +41,5 @@ CREATE TABLE Attendance(
 
     FOREIGN KEY(student_id)
         REFERENCES Students(student_id)
+        ON DELETE CASCADE
 );
