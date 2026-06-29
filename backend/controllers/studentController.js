@@ -93,9 +93,29 @@ const deleteStudent = (req, res) => {
 
 };
 
+const searchStudents = (req, res) => {
+
+    const name = req.query.name;
+
+    studentModel.searchStudents(name, (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                message: "Search failed",
+                error: err.message
+            });
+        }
+
+        res.status(200).json(results);
+
+    });
+
+};
+
 module.exports = {
     getStudents,
     addStudent,
     updateStudent,
-    deleteStudent
+    deleteStudent,
+    searchStudents
 };

@@ -1,3 +1,23 @@
+const searchStudents = (name, callback) => {
+
+    const sql = `
+        SELECT *
+        FROM Students
+        WHERE name LIKE ?
+    `;
+
+    db.query(sql, [`%${name}%`], (err, results) => {
+
+        if (err) {
+            return callback(err, null);
+        }
+
+        callback(null, results);
+
+    });
+
+};
+
 const db = require("../config/db");
 
 const getAllStudents = (callback) => {
@@ -97,9 +117,11 @@ const deleteStudent = (id, callback) => {
     });
 
 };
+
 module.exports = {
     getAllStudents,
     addStudent,
     updateStudent,
-    deleteStudent
+    deleteStudent,
+    searchStudents
 };
