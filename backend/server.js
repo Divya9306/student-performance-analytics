@@ -1,4 +1,5 @@
 const express = require("express");
+const dashboardRoutes = require("./routes/dashboardRoute");
 require("dotenv").config();
 
 const db = require("./config/db");
@@ -16,6 +17,8 @@ app.get("/", (req, res) => {
 
 // Student Routes
 app.use("/students", studentRoutes);
+
+app.use("/dashboard", dashboardRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
