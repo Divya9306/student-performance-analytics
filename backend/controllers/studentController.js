@@ -137,11 +137,39 @@ const getStudentById = (req, res) => {
 
 };
 
+const getStudentsPaginated = (req, res) => {
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+
+    const offset = (page - 1) * limit;
+
+    studentModel.getStudentsPaginated(limit, offset, (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                message: "Failed to fetch students",
+                error: err.message
+            });
+        }
+
+        res.status(200).json({
+            page,
+            limit,
+            totalReturned: results.length,
+            data: results
+        });
+
+    });
+
+};
+
 module.exports = {
     getStudents,
+    getStudentById,
     addStudent,
     updateStudent,
     deleteStudent,
     searchStudents,
-    getStudentById
+    getStudentsPaginated
 };

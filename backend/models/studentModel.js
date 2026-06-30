@@ -138,11 +138,31 @@ const getStudentById = (id, callback) => {
 
 };
 
+const getStudentsPaginated = (limit, offset, callback) => {
+
+    const sql = `
+        SELECT *
+        FROM Students
+        LIMIT ? OFFSET ?
+    `;
+
+    db.query(sql, [limit, offset], (err, results) => {
+
+        if (err) {
+            return callback(err, null);
+        }
+
+        callback(null, results);
+
+    });
+
+};
 module.exports = {
     getAllStudents,
+    getStudentById,
     addStudent,
     updateStudent,
     deleteStudent,
     searchStudents,
-    getStudentById
+    getStudentsPaginated
 };

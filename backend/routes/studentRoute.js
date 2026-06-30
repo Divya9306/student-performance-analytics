@@ -10,6 +10,11 @@ router.put("/:id", studentController.updateStudent);
 router.delete("/:id", studentController.deleteStudent);
 router.get("/search", studentController.searchStudents);
 router.get("/:id", studentController.getStudentById);
+router.get("/page/list", studentController.getStudentsPaginated);
 
 module.exports = router;
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
