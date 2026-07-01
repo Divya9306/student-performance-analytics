@@ -166,20 +166,22 @@ const getStudentReport = (id, callback) => {
             s.name,
             s.department,
             sub.subject_name,
-            m.marks
+            m.marks,
+            a.present_days,
+            a.total_days
         FROM Students s
         INNER JOIN Marks m
             ON s.student_id = m.student_id
         INNER JOIN Subjects sub
             ON m.subject_id = sub.subject_id
+        INNER JOIN Attendance a
+            ON s.student_id = a.student_id
         WHERE s.student_id = ?
     `;
 
     db.query(sql, [id], (err, results) => {
 
-        if (err) {
-            return callback(err, null);
-        }
+        if (err) return callback(err, null);
 
         callback(null, results);
 

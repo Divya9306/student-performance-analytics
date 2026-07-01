@@ -163,6 +163,7 @@ const getStudentsPaginated = (req, res) => {
     });
 
 };
+
 const getStudentReport = (req, res) => {
 
     const id = req.params.id;
@@ -182,10 +183,19 @@ const getStudentReport = (req, res) => {
             });
         }
 
+        const average =
+            results.reduce((sum, row) => sum + row.marks, 0) / results.length;
+
+        const attendance =
+            (results[0].present_days / results[0].total_days) * 100;
+
         const report = {
             student_id: results[0].student_id,
             name: results[0].name,
             department: results[0].department,
+            averageMarks: Number(average.toFixed(2)),
+            attendancePercentage: Number(attendance.toFixed(2)),
+            status: average >= 40 ? "Pass" : "Fail",
             subjects: results.map(row => ({
                 subject: row.subject_name,
                 marks: row.marks
@@ -197,7 +207,6 @@ const getStudentReport = (req, res) => {
     });
 
 };
-
 module.exports = {
     getStudents,
     getStudentById,
