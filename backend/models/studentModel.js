@@ -157,6 +157,36 @@ const getStudentsPaginated = (limit, offset, callback) => {
     });
 
 };
+
+const getStudentReport = (id, callback) => {
+
+    const sql = `
+        SELECT
+            s.student_id,
+            s.name,
+            s.department,
+            sub.subject_name,
+            m.marks
+        FROM Students s
+        INNER JOIN Marks m
+            ON s.student_id = m.student_id
+        INNER JOIN Subjects sub
+            ON m.subject_id = sub.subject_id
+        WHERE s.student_id = ?
+    `;
+
+    db.query(sql, [id], (err, results) => {
+
+        if (err) {
+            return callback(err, null);
+        }
+
+        callback(null, results);
+
+    });
+
+};
+
 module.exports = {
     getAllStudents,
     getStudentById,
@@ -164,5 +194,6 @@ module.exports = {
     updateStudent,
     deleteStudent,
     searchStudents,
-    getStudentsPaginated
+    getStudentsPaginated,
+    getStudentReport
 };

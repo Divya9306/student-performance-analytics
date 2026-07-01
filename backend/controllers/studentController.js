@@ -163,6 +163,40 @@ const getStudentsPaginated = (req, res) => {
     });
 
 };
+const getStudentReport = (req, res) => {
+
+    const id = req.params.id;
+
+    studentModel.getStudentReport(id, (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                message: "Failed to fetch report",
+                error: err.message
+            });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+
+        const report = {
+            student_id: results[0].student_id,
+            name: results[0].name,
+            department: results[0].department,
+            subjects: results.map(row => ({
+                subject: row.subject_name,
+                marks: row.marks
+            }))
+        };
+
+        res.status(200).json(report);
+
+    });
+
+};
 
 module.exports = {
     getStudents,
@@ -171,5 +205,6 @@ module.exports = {
     updateStudent,
     deleteStudent,
     searchStudents,
-    getStudentsPaginated
+    getStudentsPaginated,
+    getStudentReport
 };

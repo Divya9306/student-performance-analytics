@@ -11,6 +11,7 @@ router.delete("/:id", studentController.deleteStudent);
 router.get("/search", studentController.searchStudents);
 router.get("/:id", studentController.getStudentById);
 router.get("/page/list", studentController.getStudentsPaginated);
+router.get("/:id/report", studentController.getStudentReport);
 
 module.exports = router;
 
