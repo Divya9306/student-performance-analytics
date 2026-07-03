@@ -1,13 +1,20 @@
-import Navbar from "/components/Navbar";
+import Navbar from "./components/Navbar";
+import Students from "./pages/Students";
 
 function App() {
+
     return (
+
         <>
+
             <Navbar />
 
-            <h1>Welcome to Student Performance Analytics System</h1>
+            <Students />
+
         </>
+
     );
+
 }
 
 export default App;
