@@ -1,5 +1,5 @@
-import Navbar from "./components/Navbar";
-import Students from "./pages/Students";
+import Navbar from "/components/Navbar";
+import Students from "/pages/Students";
 
 function App() {
 
