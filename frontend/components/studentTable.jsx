@@ -27,7 +27,7 @@ function StudentTable({ students }) {
 
                         <td>{student.name}</td>
 
-                        <td>{student.email_id}</td>
+                        <td>{student.email_ID}</td>
 
                         <td>{student.department}</td>
 
