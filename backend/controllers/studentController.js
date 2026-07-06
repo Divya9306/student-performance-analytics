@@ -79,13 +79,7 @@ const deleteStudent = (req, res) => {
             });
         }
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                message: "Student not found"
-            });
-        }
-
-        res.status(200).json({
+        res.json({
             message: "Student deleted successfully"
         });
 

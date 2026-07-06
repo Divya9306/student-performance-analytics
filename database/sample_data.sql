@@ -50,3 +50,8 @@ FROM Students
 WHERE student_id = 3;
 
 ALTER TABLE Students AUTO_INCREMENT = 3;
+
+describe students;
+
+ALTER TABLE Students
+RENAME COLUMN email_id TO email_ID;

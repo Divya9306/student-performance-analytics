@@ -1,4 +1,4 @@
-function StudentTable({ students }) {
+function StudentTable({ students, onEdit, onDelete }) {
 
     return (
 
@@ -24,19 +24,27 @@ function StudentTable({ students }) {
                     <tr key={student.student_id}>
 
                         <td>{student.student_id}</td>
-
                         <td>{student.name}</td>
-
                         <td>{student.email_ID}</td>
-
                         <td>{student.department}</td>
-
-                        <td>{student.admission_date}</td>
+                        <td>{student.admission_date?.split("T")[0]}</td>
 
                         <td>
-                            <button>Edit</button>
+
+                            <button
+                                onClick={() => onEdit(student)}
+                            >
+                                Edit
+                            </button>
+
                             {" "}
-                            <button>Delete</button>
+
+                            <button
+                                onClick={() => onDelete(student.student_id)}
+                            >
+                                Delete
+                            </button>
+
                         </td>
 
                     </tr>
