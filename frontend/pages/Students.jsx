@@ -47,25 +47,28 @@ function Students() {
     };
 
     return (
-        <div>
+    <div className="bg-white rounded-xl shadow-lg p-8">
 
-            <AddStudent
-                onStudentAdded={fetchStudents}
-                editingStudent={editingStudent}
-            />
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">
+            Student Management
+        </h1>
 
-            <br />
+        <AddStudent
+            onStudentAdded={fetchStudents}
+            editingStudent={editingStudent}
+            setEditingStudent={setEditingStudent}
+        />
 
-            <h1>Students</h1>
-
+        <div className="mt-8">
             <StudentTable
                 students={students}
                 onEdit={setEditingStudent}
                 onDelete={deleteStudent}
             />
-
         </div>
-    );
+
+    </div>
+);
 }
 
 export default Students;
