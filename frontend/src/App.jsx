@@ -7,9 +7,9 @@ function App() {
 
             <Navbar />
 
-            <div className="max-w-7xl mx-auto py-10 px-6">
+            <main className="max-w-7xl mx-auto px-6 py-8">
                 <Students />
-            </div>
+            </main>
 
         </div>
     );

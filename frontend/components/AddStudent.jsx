@@ -74,34 +74,37 @@ function AddStudent({ onStudentAdded, editingStudent }) {
         }
     };
 
-    return (
-        <form onSubmit={handleSubmit}>
+   return (
+    <div className="bg-white rounded-xl shadow-md p-6 mb-8">
 
-            <h2>
-                {editingStudent ? "Edit Student" : "Add Student"}
-            </h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            {editingStudent ? "Edit Student" : "Add Student"}
+        </h2>
+
+        <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
 
             <input
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder="Student Name"
                 value={formData.name}
                 onChange={handleChange}
+                className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
             />
-
-            <br /><br />
 
             <input
                 type="email"
                 name="email_ID"
-                placeholder="Email"
+                placeholder="Email Address"
                 value={formData.email_ID}
                 onChange={handleChange}
+                className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
             />
-
-            <br /><br />
 
             <input
                 type="text"
@@ -109,27 +112,32 @@ function AddStudent({ onStudentAdded, editingStudent }) {
                 placeholder="Department"
                 value={formData.department}
                 onChange={handleChange}
+                className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
             />
-
-            <br /><br />
 
             <input
                 type="date"
                 name="admission_date"
                 value={formData.admission_date}
                 onChange={handleChange}
+                className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
             />
 
-            <br /><br />
-
-            <button type="submit">
-                {editingStudent ? "Update Student" : "Add Student"}
-            </button>
+            <div className="md:col-span-2">
+                <button
+                    type="submit"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+                >
+                    {editingStudent ? "Update Student" : "Add Student"}
+                </button>
+            </div>
 
         </form>
-    );
+
+    </div>
+);
 }
 
 export default AddStudent;
