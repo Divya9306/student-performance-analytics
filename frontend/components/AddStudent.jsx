@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import toast from "react-hot-toast";
 
 function AddStudent({ onStudentAdded, editingStudent }) {
     const [formData, setFormData] = useState({
@@ -34,45 +35,47 @@ function AddStudent({ onStudentAdded, editingStudent }) {
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+   const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        try {
+    try {
 
-            if (editingStudent) {
+        if (editingStudent) {
 
-                await api.put(
-                    `/students/${editingStudent.student_id}`,
-                    formData
-                );
+            await api.put(
+                `/students/${editingStudent.student_id}`,
+                formData
+            );
 
-                alert("Student updated successfully!");
+            toast.success("Student updated successfully!");
 
-            } else {
+            setEditingStudent(null);
 
-                await api.post("/students", formData);
+        } else {
 
-                alert("Student added successfully!");
+            await api.post("/students", formData);
 
-            }
-
-            setFormData({
-                name: "",
-                email_ID: "",
-                department: "",
-                admission_date: ""
-            });
-
-            onStudentAdded();
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("Operation failed");
+            toast.success("Student added successfully!");
 
         }
-    };
+
+        setFormData({
+            name: "",
+            email_ID: "",
+            department: "",
+            admission_date: ""
+        });
+
+        onStudentAdded();
+
+    } catch (error) {
+
+        console.error(error);
+
+        toast.error("Operation failed!");
+
+    }
+};
 
    return (
     <div className="bg-white rounded-xl shadow-md p-6 mb-8">

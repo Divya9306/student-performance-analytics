@@ -4,6 +4,7 @@ import StudentTable from "../components/StudentTable";
 import AddStudent from "../components/AddStudent";
 import SearchBar from "../components/SearchBar";
 import DashboardCards from "../components/DashboardCards";
+import toast from "react-hot-toast";
 
 function Students() {
     const [students, setStudents] = useState([]);
@@ -60,7 +61,7 @@ function Students() {
 
             await api.delete(`/students/${id}`);
 
-            alert("Student deleted successfully!");
+            toast.success("Student deleted successfully!");
 
             fetchStudents();
             fetchDashboardStats();
@@ -69,7 +70,7 @@ function Students() {
 
             console.error(error);
 
-            alert("Failed to delete student");
+            toast.error("Failed to delete student");
 
         }
 
