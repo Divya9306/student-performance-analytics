@@ -3,14 +3,23 @@ import api from "../services/api";
 import StudentTable from "../components/StudentTable";
 import AddStudent from "../components/AddStudent";
 import SearchBar from "../components/SearchBar";
+import DashboardCards from "../components/DashboardCards";
 
 function Students() {
     const [students, setStudents] = useState([]);
     const [editingStudent, setEditingStudent] = useState(null);
     const [search, setSearch] = useState("");
 
+    const [stats, setStats] = useState({
+        totalStudents: 0,
+        totalSubjects: 0,
+        totalMarksRecords: 0,
+        averageMarks: 0
+    });
+
     useEffect(() => {
         fetchStudents();
+        fetchDashboardStats();
     }, [search]);
 
     const fetchStudents = async () => {
@@ -25,6 +34,15 @@ function Students() {
 
             setStudents(response.data);
 
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const fetchDashboardStats = async () => {
+        try {
+            const response = await api.get("/dashboard");
+            setStats(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -45,6 +63,7 @@ function Students() {
             alert("Student deleted successfully!");
 
             fetchStudents();
+            fetchDashboardStats();
 
         } catch (error) {
 
@@ -57,28 +76,37 @@ function Students() {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="space-y-8">
 
-            <h1 className="text-3xl font-bold mb-6 text-gray-800">
-                Student Management
-            </h1>
+            <DashboardCards stats={stats} />
 
-            <AddStudent
-                onStudentAdded={fetchStudents}
-                editingStudent={editingStudent}
-                setEditingStudent={setEditingStudent}
-            />
+            <div className="bg-white rounded-xl shadow-lg p-8">
 
-            <SearchBar
-                search={search}
-                setSearch={setSearch}
-            />
+                <h1 className="text-3xl font-bold mb-6 text-gray-800">
+                    Student Management
+                </h1>
 
-            <StudentTable
-                students={students}
-                onEdit={setEditingStudent}
-                onDelete={deleteStudent}
-            />
+                <AddStudent
+                    onStudentAdded={() => {
+                        fetchStudents();
+                        fetchDashboardStats();
+                    }}
+                    editingStudent={editingStudent}
+                    setEditingStudent={setEditingStudent}
+                />
+
+                <SearchBar
+                    search={search}
+                    setSearch={setSearch}
+                />
+
+                <StudentTable
+                    students={students}
+                    onEdit={setEditingStudent}
+                    onDelete={deleteStudent}
+                />
+
+            </div>
 
         </div>
     );
