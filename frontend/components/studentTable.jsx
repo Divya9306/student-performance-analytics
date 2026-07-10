@@ -52,7 +52,7 @@ function StudentTable({ students, onEdit, onDelete }) {
                                     </button>
 
                                     <button
-                                        onClick={() => onDelete(student.student_id)}
+                                        onClick={() => onDelete(student)}
                                         className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
                                     >
                                         Delete

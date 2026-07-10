@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import toast from "react-hot-toast";
+
 import StudentTable from "../components/StudentTable";
 import AddStudent from "../components/AddStudent";
 import SearchBar from "../components/SearchBar";
 import DashboardCards from "../components/DashboardCards";
-import toast from "react-hot-toast";
+import DeleteModal from "../components/DeleteModal";
 
 function Students() {
     const [students, setStudents] = useState([]);
@@ -17,6 +19,9 @@ function Students() {
         totalMarksRecords: 0,
         averageMarks: 0
     });
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedStudent, setSelectedStudent] = useState(null);
 
     useEffect(() => {
         fetchStudents();
@@ -34,7 +39,6 @@ function Students() {
             }
 
             setStudents(response.data);
-
         } catch (error) {
             console.error(error);
         }
@@ -49,31 +53,31 @@ function Students() {
         }
     };
 
-    const deleteStudent = async (id) => {
+    const openDeleteModal = (student) => {
+        setSelectedStudent(student);
+        setIsModalOpen(true);
+    };
 
-        const confirmDelete = window.confirm(
-            "Are you sure you want to delete this student?"
-        );
+    const closeDeleteModal = () => {
+        setSelectedStudent(null);
+        setIsModalOpen(false);
+    };
 
-        if (!confirmDelete) return;
-
+    const confirmDelete = async () => {
         try {
-
-            await api.delete(`/students/${id}`);
+            await api.delete(`/students/${selectedStudent.student_id}`);
 
             toast.success("Student deleted successfully!");
 
             fetchStudents();
             fetchDashboardStats();
 
+            closeDeleteModal();
+
         } catch (error) {
-
             console.error(error);
-
             toast.error("Failed to delete student");
-
         }
-
     };
 
     return (
@@ -104,10 +108,17 @@ function Students() {
                 <StudentTable
                     students={students}
                     onEdit={setEditingStudent}
-                    onDelete={deleteStudent}
+                    onDelete={openDeleteModal}
                 />
 
             </div>
+
+            <DeleteModal
+                isOpen={isModalOpen}
+                studentName={selectedStudent?.name}
+                onClose={closeDeleteModal}
+                onConfirm={confirmDelete}
+            />
 
         </div>
     );
