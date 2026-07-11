@@ -7,11 +7,15 @@ import AddStudent from "../components/AddStudent";
 import SearchBar from "../components/SearchBar";
 import DashboardCards from "../components/DashboardCards";
 import DeleteModal from "../components/DeleteModal";
+import Pagination from "../components/Pagination";
 
 function Students() {
     const [students, setStudents] = useState([]);
     const [editingStudent, setEditingStudent] = useState(null);
     const [search, setSearch] = useState("");
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     const [stats, setStats] = useState({
         totalStudents: 0,
@@ -26,19 +30,30 @@ function Students() {
     useEffect(() => {
         fetchStudents();
         fetchDashboardStats();
-    }, [search]);
+    }, [currentPage, search]);
 
     const fetchStudents = async () => {
         try {
-            let response;
 
-            if (search.trim() === "") {
-                response = await api.get("/students");
-            } else {
-                response = await api.get(`/students/search?name=${search}`);
+            if (search.trim() !== "") {
+
+                const response = await api.get(
+                    `/students/search?name=${search}`
+                );
+
+                setStudents(response.data);
+                setTotalPages(1);
+
+                return;
             }
 
-            setStudents(response.data);
+            const response = await api.get(
+                `/students/page/list?page=${currentPage}&limit=5`
+            );
+
+            setStudents(response.data.data);
+            setTotalPages(response.data.totalPages);
+
         } catch (error) {
             console.error(error);
         }
@@ -65,6 +80,7 @@ function Students() {
 
     const confirmDelete = async () => {
         try {
+
             await api.delete(`/students/${selectedStudent.student_id}`);
 
             toast.success("Student deleted successfully!");
@@ -75,8 +91,11 @@ function Students() {
             closeDeleteModal();
 
         } catch (error) {
+
             console.error(error);
+
             toast.error("Failed to delete student");
+
         }
     };
 
@@ -102,7 +121,10 @@ function Students() {
 
                 <SearchBar
                     search={search}
-                    setSearch={setSearch}
+                    setSearch={(value) => {
+                        setSearch(value);
+                        setCurrentPage(1);
+                    }}
                 />
 
                 <StudentTable
@@ -110,6 +132,14 @@ function Students() {
                     onEdit={setEditingStudent}
                     onDelete={openDeleteModal}
                 />
+
+                {search.trim() === "" && (
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                    />
+                )}
 
             </div>
 
