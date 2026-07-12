@@ -8,11 +8,14 @@ import SearchBar from "../components/SearchBar";
 import DashboardCards from "../components/DashboardCards";
 import DeleteModal from "../components/DeleteModal";
 import Pagination from "../components/Pagination";
+import DepartmentPieChart from "../components/DepartmentPieChart";
 
 function Students() {
     const [students, setStudents] = useState([]);
     const [editingStudent, setEditingStudent] = useState(null);
     const [search, setSearch] = useState("");
+
+    const [departmentStats, setDepartmentStats] = useState([]);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -30,6 +33,7 @@ function Students() {
     useEffect(() => {
         fetchStudents();
         fetchDashboardStats();
+        fetchDepartmentStats();
     }, [currentPage, search]);
 
     const fetchStudents = async () => {
@@ -68,6 +72,15 @@ function Students() {
         }
     };
 
+    const fetchDepartmentStats = async () => {
+        try {
+            const response = await api.get("/dashboard/department-stats");
+            setDepartmentStats(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const openDeleteModal = (student) => {
         setSelectedStudent(student);
         setIsModalOpen(true);
@@ -87,6 +100,7 @@ function Students() {
 
             fetchStudents();
             fetchDashboardStats();
+            fetchDepartmentStats();
 
             closeDeleteModal();
 
@@ -104,6 +118,8 @@ function Students() {
 
             <DashboardCards stats={stats} />
 
+            <DepartmentPieChart data={departmentStats} />
+
             <div className="bg-white rounded-xl shadow-lg p-8">
 
                 <h1 className="text-3xl font-bold mb-6 text-gray-800">
@@ -114,6 +130,7 @@ function Students() {
                     onStudentAdded={() => {
                         fetchStudents();
                         fetchDashboardStats();
+                        fetchDepartmentStats();
                     }}
                     editingStudent={editingStudent}
                     setEditingStudent={setEditingStudent}
