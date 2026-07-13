@@ -9,6 +9,7 @@ import DashboardCards from "../components/DashboardCards";
 import DeleteModal from "../components/DeleteModal";
 import Pagination from "../components/Pagination";
 import DepartmentPieChart from "../components/DepartmentPieChart";
+import DepartmentBarChart from "../components/DepartmentBarChart";
 
 function Students() {
     const [students, setStudents] = useState([]);
@@ -118,7 +119,13 @@ function Students() {
 
             <DashboardCards stats={stats} />
 
-            <DepartmentPieChart data={departmentStats} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <DepartmentPieChart data={departmentStats} />
+
+    <DepartmentBarChart data={departmentStats} />
+
+</div>
 
             <div className="bg-white rounded-xl shadow-lg p-8">
 
