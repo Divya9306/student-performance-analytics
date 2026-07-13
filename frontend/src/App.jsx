@@ -1,5 +1,8 @@
-import Navbar from "/components/Navbar";
-import Students from "/pages/Students";
+import { Routes, Route } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import Students from "./pages/Students";
+import Leaderboard from "./pages/Leaderboard";
 
 function App() {
     return (
@@ -8,7 +11,21 @@ function App() {
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-6 py-8">
-                <Students />
+
+                <Routes>
+
+                    <Route
+                        path="/"
+                        element={<Students />}
+                    />
+
+                    <Route
+                        path="/leaderboard"
+                        element={<Leaderboard />}
+                    />
+
+                </Routes>
+
             </main>
 
         </div>
