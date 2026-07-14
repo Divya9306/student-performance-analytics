@@ -10,99 +10,121 @@ function Leaderboard() {
     }, []);
 
     const fetchLeaderboard = async () => {
-
         try {
-
             const response = await api.get("/leaderboard");
-
             setStudents(response.data);
-
         } catch (error) {
-
             console.error(error);
-
         }
-
     };
 
-    const getRankStyle = (rank) => {
-
-        if (rank === 1)
-            return "bg-yellow-100 text-yellow-700 font-bold";
-
-        if (rank === 2)
-            return "bg-gray-200 text-gray-700 font-bold";
-
-        if (rank === 3)
-            return "bg-orange-100 text-orange-700 font-bold";
-
-        return "";
-
-    };
+    const topThree = students.slice(0, 3);
 
     return (
 
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="space-y-8">
 
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">
-                🏆 Student Leaderboard
-            </h1>
+            <div className="bg-white rounded-xl shadow-lg p-8">
 
-            <table className="w-full border-collapse">
+                <h1 className="text-3xl font-bold text-gray-800 mb-8">
+                    🏆 Student Leaderboard
+                </h1>
 
-                <thead>
+                <div className="grid md:grid-cols-3 gap-6">
 
-                    <tr className="bg-blue-600 text-white">
+                    {topThree.map((student) => (
 
-                        <th className="p-3">Rank</th>
-                        <th className="p-3">Student ID</th>
-                        <th className="p-3">Name</th>
-                        <th className="p-3">Average Marks</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {students.map((student) => (
-
-                        <tr
+                        <div
                             key={student.student_id}
-                            className={`border-b hover:bg-gray-50 ${getRankStyle(student.rank)}`}
+                            className={`rounded-xl p-6 text-center shadow-lg transition hover:scale-105
+                            ${
+                                student.rank === 1
+                                    ? "bg-yellow-100"
+                                    : student.rank === 2
+                                    ? "bg-gray-200"
+                                    : "bg-orange-100"
+                            }`}
                         >
 
-                            <td className="p-3 text-center">
+                            <div className="text-5xl mb-4">
 
                                 {student.rank === 1 && "🥇"}
-
                                 {student.rank === 2 && "🥈"}
-
                                 {student.rank === 3 && "🥉"}
 
-                                {student.rank > 3 && student.rank}
+                            </div>
 
-                            </td>
-
-                            <td className="p-3 text-center">
-                                {student.student_id}
-                            </td>
-
-                            <td className="p-3">
+                            <h2 className="text-xl font-bold">
                                 {student.name}
-                            </td>
+                            </h2>
 
-                            <td className="p-3 text-center">
-                                {student.averageMarks}
-                            </td>
+                            <p className="mt-2 text-lg">
+                                ⭐ {student.averageMarks}%
+                            </p>
 
-                        </tr>
+                        </div>
 
                     ))}
 
-                </tbody>
+                </div>
 
-            </table>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-8">
+
+                <h2 className="text-2xl font-bold mb-6">
+                    Complete Rankings
+                </h2>
+
+                <table className="w-full">
+
+                    <thead>
+
+                        <tr className="bg-blue-600 text-white">
+
+                            <th className="p-3">Rank</th>
+                            <th className="p-3">ID</th>
+                            <th className="p-3">Name</th>
+                            <th className="p-3">Average</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {students.map((student) => (
+
+                            <tr
+                                key={student.student_id}
+                                className="border-b hover:bg-gray-50"
+                            >
+
+                                <td className="p-3 text-center">
+                                    {student.rank}
+                                </td>
+
+                                <td className="p-3 text-center">
+                                    {student.student_id}
+                                </td>
+
+                                <td className="p-3">
+                                    {student.name}
+                                </td>
+
+                                <td className="p-3 text-center">
+                                    {student.averageMarks}
+                                </td>
+
+                            </tr>
+
+                        ))}
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
 
