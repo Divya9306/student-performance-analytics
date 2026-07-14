@@ -10,6 +10,7 @@ import DeleteModal from "../components/DeleteModal";
 import Pagination from "../components/Pagination";
 import DepartmentPieChart from "../components/DepartmentPieChart";
 import DepartmentBarChart from "../components/DepartmentBarChart";
+import { exportStudentsToExcel } from "../utils/exportExcel";
 
 function Students() {
     const [students, setStudents] = useState([]);
@@ -129,9 +130,20 @@ function Students() {
 
             <div className="bg-white rounded-xl shadow-lg p-8">
 
-                <h1 className="text-3xl font-bold mb-6 text-gray-800">
-                    Student Management
-                </h1>
+                <div className="flex justify-between items-center mb-6">
+
+    <h1 className="text-3xl font-bold text-gray-800">
+        Student Management
+    </h1>
+
+    <button
+        onClick={() => exportStudentsToExcel(students)}
+        className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow transition"
+    >
+        📥 Export to Excel
+    </button>
+
+</div>
 
                 <AddStudent
                     onStudentAdded={() => {
