@@ -11,6 +11,7 @@ import Pagination from "../components/Pagination";
 import DepartmentPieChart from "../components/DepartmentPieChart";
 import DepartmentBarChart from "../components/DepartmentBarChart";
 import { exportStudentsToExcel } from "../utils/exportExcel";
+import { exportStudentsToPDF } from "../utils/exportPDF";
 
 function Students() {
     const [students, setStudents] = useState([]);
@@ -130,18 +131,29 @@ function Students() {
 
             <div className="bg-white rounded-xl shadow-lg p-8">
 
-                <div className="flex justify-between items-center mb-6">
+               <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
 
     <h1 className="text-3xl font-bold text-gray-800">
         Student Management
     </h1>
 
-    <button
-        onClick={() => exportStudentsToExcel(students)}
-        className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow transition"
-    >
-        📥 Export to Excel
-    </button>
+    <div className="flex gap-3">
+
+        <button
+            onClick={() => exportStudentsToExcel(students)}
+            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow transition"
+        >
+            📥 Export Excel
+        </button>
+
+        <button
+            onClick={() => exportStudentsToPDF(students)}
+            className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg shadow transition"
+        >
+            📄 Export PDF
+        </button>
+
+    </div>
 
 </div>
 

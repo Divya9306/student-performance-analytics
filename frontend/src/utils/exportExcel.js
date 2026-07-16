@@ -21,8 +21,7 @@ export const exportStudentsToExcel = (students) => {
     const file = new Blob(
         [excelBuffer],
         {
-            type:
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8"
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8"
         }
     );
 
