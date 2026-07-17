@@ -17,6 +17,24 @@ const getDashboardStats = (req, res) => {
 
 };
 
+const getDepartmentStats = (req, res) => {
+
+    dashboardModel.getDepartmentStats((err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                message: "Failed to fetch department statistics",
+                error: err.message
+            });
+        }
+
+        res.status(200).json(result);
+
+    });
+
+};
+
 module.exports = {
-    getDashboardStats
+    getDashboardStats,
+    getDepartmentStats
 };

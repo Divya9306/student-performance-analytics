@@ -147,11 +147,15 @@ const getStudentsPaginated = (req, res) => {
             });
         }
 
+        const totalPages = Math.ceil(results.totalStudents / limit);
+
         res.status(200).json({
             page,
             limit,
-            totalReturned: results.length,
-            data: results
+            totalStudents: results.totalStudents,
+            totalPages,
+            totalReturned: results.students.length,
+            data: results.students
         });
 
     });

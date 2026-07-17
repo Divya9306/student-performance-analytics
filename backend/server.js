@@ -7,6 +7,7 @@ const db = require("./config/db");
 const studentRoutes = require("./routes/studentRoute");
 const dashboardRoutes = require("./routes/dashboardRoute");
 const leaderboardRoutes = require("./routes/leaderboardRoute");
+const authRoute = require("./routes/authRoute");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 app.use("/students", studentRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/leaderboard", leaderboardRoutes);
+app.use("/auth", authRoute);
 
 // ---------- Start Server ----------
 app.listen(PORT, () => {

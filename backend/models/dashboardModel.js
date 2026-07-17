@@ -22,6 +22,30 @@ const getDashboardStats = (callback) => {
 
 };
 
+const getDepartmentStats = (callback) => {
+
+    const sql = `
+        SELECT
+            department,
+            COUNT(*) AS students
+        FROM Students
+        GROUP BY department
+        ORDER BY students DESC
+    `;
+
+    db.query(sql, (err, results) => {
+
+        if (err) {
+            return callback(err, null);
+        }
+
+        callback(null, results);
+
+    });
+
+};
+
 module.exports = {
-    getDashboardStats
+    getDashboardStats,
+    getDepartmentStats
 };

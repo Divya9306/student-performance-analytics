@@ -140,19 +140,37 @@ const getStudentById = (id, callback) => {
 
 const getStudentsPaginated = (limit, offset, callback) => {
 
-    const sql = `
-        SELECT *
+    const countQuery = `
+        SELECT COUNT(*) AS totalStudents
         FROM Students
-        LIMIT ? OFFSET ?
     `;
 
-    db.query(sql, [limit, offset], (err, results) => {
+    db.query(countQuery, (countErr, countResult) => {
 
-        if (err) {
-            return callback(err, null);
+        if (countErr) {
+            return callback(countErr, null);
         }
 
-        callback(null, results);
+        const totalStudents = countResult[0].totalStudents;
+
+        const sql = `
+            SELECT *
+            FROM Students
+            LIMIT ? OFFSET ?
+        `;
+
+        db.query(sql, [limit, offset], (err, results) => {
+
+            if (err) {
+                return callback(err, null);
+            }
+
+            callback(null, {
+                totalStudents,
+                students: results
+            });
+
+        });
 
     });
 
